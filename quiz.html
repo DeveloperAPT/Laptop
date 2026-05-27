@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Квиз — Подбор ноутбука</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <i class="fas fa-laptop neon-pulse"></i>
+        <span class="logo-text">Laptop Help</span>
+      </a>
+      <button class="hamburger" aria-label="Меню">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="site-nav">
+        <a href="index.html">Главная</a>
+        <a href="tips.html">Советы</a>
+        <a href="quiz.html" class="active">Квиз</a>
+        <button class="theme-toggle" aria-label="Сменить тему">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== PAGE HEADER ===== -->
+  <section class="page-header pink">
+    <h1><i class="fas fa-clipboard-question"></i> Подберём ноутбук за 4 шага</h1>
+    <p>Ответьте на несколько вопросов, и мы порекомендуем идеальную модель для вас</p>
+  </section>
+
+  <!-- ===== QUIZ ===== -->
+  <div class="quiz-container">
+
+    <!-- Progress -->
+    <div class="progress-wrapper">
+      <div class="progress-label">
+        <span id="progress-text">Вопрос 1 из 4</span>
+        <span id="progress-pct">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- Question 1 -->
+    <div class="question-card active" data-question="0">
+      <h2><span class="q-num">1</span> Для чего вам нужен ноутбук?</h2>
+      <div class="options">
+        <button class="option-btn" data-value="study">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Учёба, документы, интернет</span>
+        </button>
+        <button class="option-btn" data-value="gaming">
+          <i class="fas fa-gamepad"></i>
+          <span>Игры и развлечения</span>
+        </button>
+        <button class="option-btn" data-value="creative">
+          <i class="fas fa-palette"></i>
+          <span>Творчество: фото, видео, дизайн</span>
+        </button>
+        <button class="option-btn" data-value="work">
+          <i class="fas fa-briefcase"></i>
+          <span>Работа / программирование</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question-card" data-question="1">
+      <h2><span class="q-num">2</span> Какой у вас бюджет?</h2>
+      <div class="options">
+        <button class="option-btn" data-value="low">
+          <i class="fas fa-coins"></i>
+          <span>До 50 000 ₽ — хочу сэкономить</span>
+        </button>
+        <button class="option-btn" data-value="mid">
+          <i class="fas fa-wallet"></i>
+          <span>50 000 – 100 000 ₽ — золотая середина</span>
+        </button>
+        <button class="option-btn" data-value="high">
+          <i class="fas fa-gem"></i>
+          <span>От 100 000 ₽ — готов платить за качество</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="question-card" data-question="2">
+      <h2><span class="q-num">3</span> Насколько важен вес и мобильность?</h2>
+      <div class="options">
+        <button class="option-btn" data-value="portable">
+          <i class="fas fa-feather"></i>
+          <span>Очень — ношу с собой каждый день</span>
+        </button>
+        <button class="option-btn" data-value="medium">
+          <i class="fas fa-balance-scale"></i>
+          <span>Средне — иногда беру с собой</span>
+        </button>
+        <button class="option-btn" data-value="desktop">
+          <i class="fas fa-house-laptop"></i>
+          <span>Не важен — стоит на столе дома</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="question-card" data-question="3">
+      <h2><span class="q-num">4</span> Что для вас важнее всего?</h2>
+      <div class="options">
+        <button class="option-btn" data-value="battery">
+          <i class="fas fa-battery-full"></i>
+          <span>Долгая работа от батареи</span>
+        </button>
+        <button class="option-btn" data-value="performance">
+          <i class="fas fa-bolt"></i>
+          <span>Максимальная производительность</span>
+        </button>
+        <button class="option-btn" data-value="screen">
+          <i class="fas fa-eye"></i>
+          <span>Качественный экран</span>
+        </button>
+        <button class="option-btn" data-value="price">
+          <i class="fas fa-tag"></i>
+          <span>Низкая цена</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="quiz-nav">
+      <button class="btn btn-prev" id="btn-prev" onclick="prevQuestion()">
+        <i class="fas fa-arrow-left"></i> Назад
+      </button>
+      <button class="btn btn-next" id="btn-next" onclick="nextQuestion()">
+        Далее <i class="fas fa-arrow-right"></i>
+      </button>
+      <button class="btn btn-submit" id="btn-submit" onclick="showResult()">
+        <i class="fas fa-wand-magic-sparkles"></i> Подобрать
+      </button>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result-card" id="result-card">
+      <div class="result-header" id="result-header">
+        <i class="fas fa-laptop" id="result-icon"></i>
+        <h2 id="result-title"></h2>
+        <p id="result-subtitle"></p>
+      </div>
+      <div class="result-body">
+        <div class="result-model">
+          <div class="model-name" id="model-name"></div>
+          <div class="model-price" id="model-price"></div>
+        </div>
+        <div class="specs-grid" id="specs-grid"></div>
+        <div class="result-desc" id="result-desc"></div>
+        <div class="result-actions">
+          <button class="btn btn-restart" onclick="restartQuiz()">
+            <i class="fas fa-rotate-left"></i> Пройти заново
+          </button>
+          <a href="tips.html" class="btn btn-go-tips">
+            <i class="fas fa-lightbulb"></i> Читать советы
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== YANDEX SURVEY CTA ===== -->
+  <section class="section" style="text-align:center; padding-top: 0;">
+    <h2 class="section-title">Хотите персональную рекомендацию?</h2>
+    <p class="section-subtitle">Заполните наш опрос на Яндекс Формах — мы подберём ноутбук именно для вас</p>
+    <a href="https://forms.yandex.ru/u/69b292f390fa7bde45176b5b" target="_blank" rel="noopener" class="yandex-survey-btn">
+      <i class="fas fa-clipboard-list"></i> Перейти в опрос
+    </a>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Laptop Help. Все права защищены.</p>
+    <p>Информация предоставлена для ознакомления. Цены могут меняться.</p>
+    <p>Сделано с любовью </i> для тех, кто выбирает свой первый ноутбук.</p>
+    <p>ГАПОУ «Альметьевский политехнический техникум»</p>
+    <div class="footer-links">
+      <a href="index.html">Главная</a>
+      <a href="tips.html">Советы</a>
+      <a href="quiz.html">Квиз</a>
+      <a href="https://forms.yandex.ru/u/69b292f390fa7bde45176b5b" target="_blank" rel="noopener">Опрос</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
