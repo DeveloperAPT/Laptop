@@ -289,3 +289,86 @@ document.querySelectorAll('.site-nav a').forEach(function (link) {
   // Init buttons
   updateButtons();
 })();
+/* ============================================================
+   FAQ ACCORDION LOGIC
+   ============================================================ */
+document.querySelectorAll('.faq-question').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    const item = this.parentElement;
+    const isActive = item.classList.contains('active');
+    
+    // Закрываем все остальные (опционально, можно убрать этот цикл, если нужно несколько открытых)
+    document.querySelectorAll('.faq-item').forEach(function(i) {
+      i.classList.remove('active');
+    });
+
+    // Переключаем текущий
+    if (!isActive) {
+      item.classList.add('active');
+    }
+  });
+});
+
+/* ============================================================
+   SCROLL REVEAL ANIMATION (Intersection Observer)
+   ============================================================ */
+const revealElements = document.querySelectorAll('.reveal');
+
+if ('IntersectionObserver' in window) {
+  const revealObserver = new IntersectionObserver(function(entries, observer) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // Анимируем только один раз
+      }
+    });
+  }, {
+    root: null,
+    threshold: 0.15, // Элемент должен появиться на 15% чтобы сработать
+    rootMargin: "0px 0px -50px 0px"
+  });
+
+  revealElements.forEach(function(el) {
+    revealObserver.observe(el);
+  });
+} else {
+  // Fallback для очень старых браузеров: просто показываем всё
+  revealElements.forEach(function(el) {
+    el.classList.add('visible');
+  });
+}
+
+/* ============================================================
+   PWA INSTALL PROMPT
+   ============================================================ */
+let deferredPrompt;
+const installBtn = document.getElementById('pwa-install-btn');
+
+if (installBtn) {
+  window.addEventListener('beforeinstallprompt', function(e) {
+    // Предотвращаем стандартный мини-инбар в Chrome
+    e.preventDefault();
+    // Сохраняем событие, чтобы вызвать позже
+    deferredPrompt = e;
+    // Показываем нашу кнопку
+    installBtn.style.display = 'block';
+  });
+
+  installBtn.addEventListener('click', function() {
+    if (deferredPrompt) {
+      // Показываем нативный диалог установки
+      deferredPrompt.prompt();
+      
+      // Ждем ответа пользователя
+      deferredPrompt.userChoice.then(function(choiceResult) {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('Пользователь установил PWA');
+        } else {
+          console.log('Пользователь отменил установку');
+        }
+        deferredPrompt = null;
+        installBtn.style.display = 'none';
+      });
+    }
+  });
+}
